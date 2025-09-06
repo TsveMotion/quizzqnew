@@ -47,21 +47,17 @@ export default function PlayGame() {
       return
     }
 
-    useEffect(() => {
-      if (!playerId || !playerName) return
-
-      const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 'http://127.0.0.1:3001'
-      console.log('Player connecting to:', socketUrl)
-      
-      const newSocket = io(socketUrl, {
-        transports: ['websocket', 'polling'],
-        query: {
-          gameCode,
-          playerId,
-          playerName,
-          role: 'player',
-        },
-      toast.success(`${data.playerName} joined the game`)
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 'http://127.0.0.1:3001'
+    console.log('Player connecting to:', socketUrl)
+    
+    const newSocket = io(socketUrl, {
+      transports: ['websocket', 'polling'],
+      query: {
+        gameCode,
+        playerId,
+        playerName,
+        role: 'player',
+      },
     })
 
     newSocket.on('gameStarted', () => {
